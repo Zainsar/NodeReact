@@ -1,35 +1,41 @@
 import express from "express"
 import controller from "../controllers/productController.mjs"
+import controllers from "../controllers/CategoryController.mjs"
+import controllerss from "../controllers/BrandsController.mjs"
 import userController from "../controllers/userController.mjs"
 // import { upload } from "../cloudinaryConfig.mjs"
 
 const router = express.Router()
 
 router
-//GET REQUESTs
+    //GET REQUESTs
 
-.get("/",controller.getAllProducts)
-.get("/product/:id",controller.getProduct)
+    .get("/getAllBrands", controllerss.getAllBrands)
+    .post("/addBrands", controllerss.addBrands)
+    .post("/addCategory", controllers.addCategory)
+    .get("/getAllCategory", controllers.getAllCategory)
+    .get("/", controller.getAllProducts)
+    .get("/product/:id", controller.getProduct)
 
-//POST REQUESTs
-.post("/addproduct",controller.addProduct)
-//file upload middleware
-// .post("/addproductwithimage", upload.single("image")  ,controller.addProductWithImage
-// 
+    //POST REQUESTs
+    .post("/addproduct", controller.addProduct)
+    //file upload middleware
+    // .post("/addproductwithimage", upload.single("image")  ,controller.addProductWithImage
+    // 
 
-// )
-//DELETE REQUESTs
-.delete("/deleteproduct/:id",controller.deleteProduct)
+    // )
+    //DELETE REQUESTs
+    .delete("/deleteproduct/:id", controller.deleteProduct)
 
-//DELETE REQUESTs
-.put("/editproduct/:id",controller.editProduct)
+    //DELETE REQUESTs
+    .put("/editproduct/:id", controller.editProduct)
 
-//User
-.post("/auth/signup",userController.Signup)
-.post("/auth/login",userController.Login)
-.get("/users",userController.getAllUsers)
-.get("/users/verify",userController.sendVerification)
+    //User
+    .post("/auth/signup", userController.Signup)
+    .post("/auth/login", userController.Login)
+    .get("/users", userController.getAllUsers)
+    .get("/users/verify", userController.sendVerification)
 
-.patch("/user/change-activation-status/:id/:status",userController.ChangeActivationStatus)
+    .patch("/user/change-activation-status/:id/:status", userController.ChangeActivationStatus)
 
 export default router

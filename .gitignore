@@ -19,3 +19,27 @@ Thumbs.db
 # Ignore build/output folders if applicable (e.g., if using TypeScript)
 **/dist/
 **/build/
+
+
+export const adminToken = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (authHeader) {
+    const token = authHeader.split(" ")[1];
+    jwt.verify(token, process.env.JWT_SEC, (err, user) => {
+      if (err) {
+        console.log("error", err)
+        return res.status(200).json({ status: 200, message: "Token is not Valid!" });
+      }
+      if (user.role == "admin") {
+        req.user = user;
+        next()
+      }
+      else {
+        return res.status(200).json({ status: 200, message: "you are not admin" });
+      }
+
+    });
+  } else {
+    return res.status(200).json({ status: 200, message: "You are not Authenticated" });
+  }
+};
